@@ -1,9 +1,9 @@
 @(eventForm: Form[EventForm])
 
-@import helper.twitterBootstrap._
+@import XenlonHelpers._
 
 @main("イベント登録") {
-  @helper.form(action = controllers.event.routes.EventCreate.create()){
+  @helper.form(action = controllers.event.routes.EventCreate.create(), 'role -> "form", 'class -> "form-horizontal"){
     <div class="container">
       <ul class="nav nav-tabs">
         <li>
