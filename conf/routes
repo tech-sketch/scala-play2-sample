@@ -11,5 +11,8 @@ POST    /event/create/create        controllers.event.EventCreate.create
 GET     /event/createTable/         controllers.event.EventCreate.createTable
 GET     /event/dropTable/           controllers.event.EventCreate.dropTable
 
+GET     /event/                     controllers.event.EventSearch.index
+POST    /event/search/              controllers.event.EventSearch.search
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

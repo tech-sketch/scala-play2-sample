@@ -1,0 +1,36 @@
+@(eventForm: Form[EventForm], events: List[Event])
+
+@import helper.twitterBootstrap._
+
+@main("イベント検索") {
+  @helper.form(action = controllers.event.routes.EventSearch.search()){
+    <div class="container">
+      <fieldset>
+        <legend>検索条件</legend>
+        @helper.inputText(eventForm("eventId"))
+        @helper.inputText(eventForm("eventNm"))
+        <button type="submit" class="btn btn-primary">検索</button>
+      </fieldset>
+
+      @if(events) {
+        <legend>イベント一覧</legend>
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>イベントID</th>
+              <th>イベント名</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for((event) <- events){
+              <tr>
+                <td>@event.eventId</td>
+                <td>@event.eventNm</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+}

@@ -28,6 +28,14 @@ object Events {
     events.insert(e)
   }
 
+  /** 検索 */
+  def find(eventId: String, eventNm: String): List[Event] = database.withTransaction { implicit session: Session =>
+    var q = events.sortBy(_.eventNm)
+    q = if (!(eventId.isEmpty)) q.filter(_.eventId === eventId) else q
+    q = if (!(eventNm.isEmpty)) q.filter(_.eventNm like ("%" + eventNm + "%")) else q
+    return q.invoker.list
+  }
+
   /** テーブル作成 */
   def createTable = database.withSession { implicit session: Session =>
     events.ddl.create
