@@ -1,5 +1,9 @@
 eventId = イベントID
 eventNm = イベント名
+eventDate = 開催日
+eventDateFrom = 開催日（From）
+eventDateTo = 開催日（To）
+homepage = ホームページ
 
 constraint.required= 必須
 error.required=必須項目です。

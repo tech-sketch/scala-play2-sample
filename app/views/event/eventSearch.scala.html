@@ -1,24 +1,36 @@
-@(eventForm: Form[EventForm], events: List[Event])
+@(eventForm: Form[EventSearchForm], events: List[Event])
 
-@import helper.twitterBootstrap._
+@import XenlonHelpers._
 
 @main("イベント検索") {
-  @helper.form(action = controllers.event.routes.EventSearch.search()){
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#" data-toggle="tab">検索</a>
+    </li>
+    <li>
+      <a href="@controllers.event.routes.EventCreate.index()" data-toggle="tab">登録</a>
+    </li>
+  </ul>
+
+  <div class="container">
+    <br>
+    @if(eventForm.errors){
+      <div class="alert alert-danger">
+        入力内容に誤りがあります。確認して下さい。
+      </div>
+    }
+  </div>
+
+  @helper.form(action = controllers.event.routes.EventSearch.search(), 'role -> "form", 'class -> "form-horizontal"){
     <div class="container">
-      <ul class="nav nav-tabs">
-        <li class="active">
-          <a href="#" data-toggle="tab">検索</a>
-        </li>
-        <li>
-          <a href="@controllers.event.routes.EventCreate.index()" data-toggle="tab">登録</a>
-        </li>
-      </ul>
       <fieldset>
         <legend>検索条件</legend>
         @helper.inputText(eventForm("eventId"))
         @helper.inputText(eventForm("eventNm"))
-        <button type="submit" class="btn btn-primary">検索</button>
+        @helper.inputDate(eventForm("eventDateFrom"))
+        @helper.inputDate(eventForm("eventDateTo"))
       </fieldset>
+        <button type="submit" class="btn btn-primary">検索</button>
 
       @if(events) {
         <legend>イベント一覧</legend>
@@ -27,6 +39,7 @@
             <tr>
               <th>イベントID</th>
               <th>イベント名</th>
+              <th>開催日</th>
               <th></th>
             </tr>
           </thead>
@@ -35,6 +48,7 @@
               <tr>
                 <td>@event.eventId</td>
                 <td>@event.eventNm</td>
+                <td>@event.eventDate</td>
                 <td>
                   <a href="@controllers.event.routes.EventUpdate.index(event.id)">
                     <i class="glyphicon glyphicon-edit"></i>

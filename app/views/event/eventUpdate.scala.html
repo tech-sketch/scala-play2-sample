@@ -1,25 +1,37 @@
 @(eventForm: Form[EventForm], id: Int)
 
-@import helper.twitterBootstrap._
+@import XenlonHelpers._
 
 @main("イベント情報変更") {
-  @helper.form(action = controllers.event.routes.EventUpdate.update(id)){
+  <ul class="nav nav-tabs">
+    <li>
+      <a href="@controllers.event.routes.EventSearch.index()" data-toggle="tab">検索</a>
+    </li>
+    <li>
+      <a href="@controllers.event.routes.EventCreate.index()" data-toggle="tab">登録</a>
+    </li>
+    <li class="active">
+      <a href="#" data-toggle="tab">更新</a>
+    </li>
+  </ul>
+
+  <div class="container">
+    <br>
+    @if(eventForm.errors){
+      <div class="alert alert-danger">
+        入力内容に誤りがあります。確認して下さい。
+      </div>
+    }
+  </div>
+
+  @helper.form(action = controllers.event.routes.EventUpdate.update(id), 'role -> "form", 'class -> "form-horizontal"){
     <div class="container">
-      <ul class="nav nav-tabs">
-        <li>
-          <a href="@controllers.event.routes.EventSearch.index()" data-toggle="tab">検索</a>
-        </li>
-        <li>
-          <a href="@controllers.event.routes.EventCreate.index()" data-toggle="tab">登録</a>
-        </li>
-        <li class="active">
-          <a href="#" data-toggle="tab">更新</a>
-        </li>
-      </ul>
       <fieldset>
-       <legend>イベントの情報</legend>
+        <legend>イベントの情報</legend>
         @helper.inputText(eventForm("eventId"))
         @helper.inputText(eventForm("eventNm"))
+        @helper.inputDate(eventForm("eventDate"))
+        @helper.inputText(eventForm("homepage"))
         <input type="submit" value="更新" class="btn btn-primary">
       </fieldset>
     </div>

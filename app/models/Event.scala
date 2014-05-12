@@ -4,8 +4,9 @@ import play.api.db.DB
 import play.api.Play.current
 import scala.slick.driver.H2Driver.simple._
 import scala.language.postfixOps
+import java.sql.Date
 
-case class Event(id: Int, eventId: String, eventNm: String)
+case class Event(id: Int, eventId: String, eventNm: String, eventDate: Option[Date], homepage: Option[String])
 
 object Events {
 
@@ -14,10 +15,12 @@ object Events {
 
   /** EVENTテーブルの定義 */
   class EventTag(tag: Tag) extends Table[Event](tag, "EVENT") {
-    def id      = column[Int]("ID", O.PrimaryKey, O AutoInc)
-    def eventId = column[String]("EVENT_ID", O.Nullable, O DBType "varchar(10)")
-    def eventNm = column[String]("EVENT_NM", O.Nullable, O DBType "varchar(100)")
-    def * = (id, eventId, eventNm) <> (Event.tupled, Event.unapply)
+    def id        = column[Int]("ID", O.PrimaryKey, O AutoInc)
+    def eventId   = column[String]("EVENT_ID", O.Nullable, O DBType "varchar(10)")
+    def eventNm   = column[String]("EVENT_NM", O.Nullable, O DBType "varchar(100)")
+    def eventDate = column[Option[Date]]("EVENT_DATE", O.Nullable, O DBType "date")
+    def homepage  = column[Option[String]]("HOMEPAGE", O.Nullable, O DBType "varchar(256)")
+    def * = (id, eventId, eventNm, eventDate, homepage) <> (Event.tupled, Event.unapply)
   }
 
   /** クエリ */
@@ -29,10 +32,12 @@ object Events {
   }
 
   /** 検索 */
-  def find(eventId: String, eventNm: String): List[Event] = database.withTransaction { implicit session: Session =>
+  def find(eventId: String, eventNm: String, eventDateFrom: Option[Date], eventDateTo: Option[Date]): List[Event] = database.withTransaction { implicit session: Session =>
     var q = events.sortBy(_.eventNm)
     q = if (!(eventId.isEmpty)) q.filter(_.eventId === eventId) else q
     q = if (!(eventNm.isEmpty)) q.filter(_.eventNm like ("%" + eventNm + "%")) else q
+    q = if (!(eventDateFrom.isEmpty)) q.filter(_.eventDate >= eventDateFrom.get) else q
+    q = if (!(eventDateTo.isEmpty)) q.filter(_.eventDate <= eventDateTo.get) else q
     return q.invoker.list
   }
 

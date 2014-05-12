@@ -13,10 +13,12 @@ object EventCreate extends Controller {
   val eventForm = Form(
     mapping(
       "eventId" -> nonEmptyText.verifying(fixLength(5)),
-      "eventNm" -> nonEmptyText.verifying(maxLength(5)))(EventForm.apply)(EventForm.unapply))
+      "eventNm" -> nonEmptyText.verifying(maxLength(5)),
+      "eventDate" -> optional(sqlDate),
+      "homepage" -> optional(text))(EventForm.apply)(EventForm.unapply))
 
   /** 初期表示 */
-  def index = Action {
+  def index = Action { implicit request =>
     Ok(views.html.event.eventCreate(eventForm))
   }
 
@@ -27,7 +29,7 @@ object EventCreate extends Controller {
         Ok(views.html.event.eventCreate(form))
       },
       success = { form =>
-        val event = Event(0, form.eventId, form.eventNm)
+        val event = Event(0, form.eventId, form.eventNm, form.eventDate, form.homepage)
         Events.create(event)
         Redirect(controllers.event.routes.EventCreate.index)
       })
@@ -44,5 +46,4 @@ object EventCreate extends Controller {
     Events.dropTable
     Ok(views.html.event.eventCreate(eventForm))
   }
-
 }
