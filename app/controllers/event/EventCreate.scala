@@ -4,7 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.validation.Constraints._
+import xenlon.api.data.validation.XenlonConstraints._
 import models.{ EventForm, Event, Events }
 
 object EventCreate extends Controller {
