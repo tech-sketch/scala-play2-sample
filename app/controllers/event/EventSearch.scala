@@ -4,7 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
-import models.{ EventForm, Events}
+import models.{ EventForm, Events }
 
 object EventSearch extends Controller {
 
@@ -24,5 +24,11 @@ object EventSearch extends Controller {
     val form = eventForm.bindFromRequest
     val events = Events.find(form.get.eventId, form.get.eventNm)
     Ok(views.html.event.eventSearch(form, events))
+  }
+
+  /** 削除 */
+  def delete(id: Int) = Action { implicit request =>
+    Events.delete(id)
+    Ok(views.html.event.eventSearch(eventForm, null))
   }
 }

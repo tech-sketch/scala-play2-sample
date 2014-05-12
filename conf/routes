@@ -17,5 +17,7 @@ POST    /event/search/              controllers.event.EventSearch.search
 GET     /event/:id/update/          controllers.event.EventUpdate.index(id: Int)
 POST    /event/:id/                 controllers.event.EventUpdate.update(id: Int)
 
+GET     /event/:id/delete/          controllers.event.EventSearch.delete(id: Int)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

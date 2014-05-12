@@ -46,6 +46,11 @@ object Events {
     events.filter(_.id === e.id).update(e)
   }
 
+  /** 削除 */
+  def delete(id: Int) = database.withTransaction { implicit session: Session =>
+    events.where(_.id === id).delete
+  }
+
   /** テーブル作成 */
   def createTable = database.withSession { implicit session: Session =>
     events.ddl.create
