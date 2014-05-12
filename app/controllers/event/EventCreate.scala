@@ -50,4 +50,21 @@ object EventCreate extends Controller {
     Redirect(controllers.event.routes.EventCreate.index)
       .flashing("success" -> "テーブルを削除しました。")
   }
+
+  def slickgen = Action { implicit request =>
+
+    val slickDriver = "scala.slick.driver.H2Driver"
+    val jdbcDriver = "org.h2.Driver"
+    val url = "jdbc:h2:tcp://localhost:9092/demo"
+    val outputFolder = "app/"
+    val pkg = "models"
+    val user = "sa"
+    val password = ""
+    import scala.slick.model.codegen.SourceCodeGenerator
+    SourceCodeGenerator.main(
+      Array(slickDriver, jdbcDriver, url, outputFolder, pkg, user, password))
+
+    Redirect(controllers.event.routes.EventCreate.index)
+      .flashing("success" -> "ソースコードをジェネレートしました。")
+  }
 }

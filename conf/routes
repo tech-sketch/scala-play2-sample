@@ -10,6 +10,7 @@ GET     /event/create/              controllers.event.EventCreate.index
 POST    /event/create/create        controllers.event.EventCreate.create
 GET     /event/createTable/         controllers.event.EventCreate.createTable
 GET     /event/dropTable/           controllers.event.EventCreate.dropTable
+GET     /event/slickgen/            controllers.event.EventCreate.slickgen
 
 GET     /event/                     controllers.event.EventSearch.index
 POST    /event/search/              controllers.event.EventSearch.search
