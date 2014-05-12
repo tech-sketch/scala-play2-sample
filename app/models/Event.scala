@@ -1,0 +1,40 @@
+package models
+
+import play.api.db.DB
+import play.api.Play.current
+import scala.slick.driver.H2Driver.simple._
+import scala.language.postfixOps
+
+case class Event(id: Int, eventId: String, eventNm: String)
+
+object Events {
+
+  /** データベースコネクション */
+  val database = Database.forDataSource(DB.getDataSource())
+
+  /** EVENTテーブルの定義 */
+  class EventTag(tag: Tag) extends Table[Event](tag, "EVENT") {
+    def id      = column[Int]("ID", O.PrimaryKey, O AutoInc)
+    def eventId = column[String]("EVENT_ID", O.Nullable, O DBType "varchar(10)")
+    def eventNm = column[String]("EVENT_NM", O.Nullable, O DBType "varchar(100)")
+    def * = (id, eventId, eventNm) <> (Event.tupled, Event.unapply)
+  }
+
+  /** クエリ */
+  val events = TableQuery[EventTag]
+
+  /** 登録 */
+  def create(e: Event) = database.withTransaction { implicit session: Session =>
+    events.insert(e)
+  }
+
+  /** テーブル作成 */
+  def createTable = database.withSession { implicit session: Session =>
+    events.ddl.create
+  }
+
+  /** テーブル削除 */
+  def dropTable = database.withSession { implicit session: Session =>
+    events.ddl.drop
+  }
+}
