@@ -12,7 +12,7 @@ object EventCreate extends Controller {
   /** イベントフォーム */
   val eventForm = Form(
     mapping(
-      "eventId" -> nonEmptyText,
+      "eventId" -> nonEmptyText.verifying(fixLength(5)),
       "eventNm" -> nonEmptyText.verifying(maxLength(5)))(EventForm.apply)(EventForm.unapply))
 
   /** 初期表示 */
