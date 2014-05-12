@@ -5,17 +5,18 @@ import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
 import xenlon.api.data.validation.XenlonConstraints._
+import xenlon.api.data.XenlonForms._
 import models.{ EventForm, Event, Events }
 
 object EventCreate extends Controller {
 
   /** イベントフォーム */
-  val eventForm = Form(
+ val eventForm = Form(
     mapping(
       "eventId" -> nonEmptyText.verifying(fixLength(5)),
       "eventNm" -> nonEmptyText.verifying(maxLength(5)),
       "eventDate" -> optional(sqlDate),
-      "homepage" -> optional(text.verifying(isUrl)))(EventForm.apply)(EventForm.unapply))
+      "homepage" -> optional(url))(EventForm.apply)(EventForm.unapply))
 
   /** 初期表示 */
   def index = Action { implicit request =>
