@@ -3,21 +3,32 @@
 @import XenlonHelpers._
 
 @main("イベント登録") {
+
+  <ul class="nav nav-tabs">
+    <li>
+      <a href="@controllers.event.routes.EventSearch.index()" data-toggle="tab">検索</a>
+    </li>
+    <li class="active">
+      <a href="#" data-toggle="tab">登録</a>
+    </li>
+  </ul>
+
+  <div class="container">
+    <br>
+    @if(eventForm.errors){
+      <div class="alert alert-danger">
+        入力内容に誤りがあります。確認して下さい。
+      </div>
+    }
+  </div>
+
   @helper.form(action = controllers.event.routes.EventCreate.create(), 'role -> "form", 'class -> "form-horizontal"){
     <div class="container">
-      <ul class="nav nav-tabs">
-        <li>
-          <a href="@controllers.event.routes.EventSearch.index()" data-toggle="tab">検索</a>
-        </li>
-        <li class="active">
-          <a href="#" data-toggle="tab">登録</a>
-        </li>
-      </ul>
       <fieldset>
-          <legend>イベントの情報</legend>
-          @helper.inputText(eventForm("eventId"))
-          @helper.inputText(eventForm("eventNm"))
-          <input type="submit" value="登録" class="btn btn-primary">
+        <legend>イベントの情報</legend>
+        @helper.inputText(eventForm("eventId"))
+        @helper.inputText(eventForm("eventNm"))
+        <input type="submit" value="登録" class="btn btn-primary">
       </fieldset>
       <a href="@controllers.event.routes.EventCreate.createTable()" class="btn">
         CREATE TABLE
