@@ -1,2 +1,5 @@
 eventId = イベントID
 eventNm = イベント名
+
+constraint.required= 必須
+error.required=必須項目です。
