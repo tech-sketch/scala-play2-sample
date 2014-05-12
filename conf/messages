@@ -3,3 +3,5 @@ eventNm = イベント名
 
 constraint.required= 必須
 error.required=必須項目です。
+constraint.maxLength=最大文字列長：{0}
+error.maxLength={0}文字以内で入力して下さい。

@@ -4,6 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.validation.Constraints._
 import models.{ EventForm, Event, Events }
 
 object EventCreate extends Controller {
@@ -12,7 +13,7 @@ object EventCreate extends Controller {
   val eventForm = Form(
     mapping(
       "eventId" -> nonEmptyText,
-      "eventNm" -> nonEmptyText)(EventForm.apply)(EventForm.unapply))
+      "eventNm" -> nonEmptyText.verifying(maxLength(5)))(EventForm.apply)(EventForm.unapply))
 
   /** 初期表示 */
   def index = Action {
