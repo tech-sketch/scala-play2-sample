@@ -29,8 +29,16 @@ object EventSearch extends Controller {
         Ok(views.html.event.eventSearch(form, null))
       },
       success = { form =>
-        val events = Events.find(form.eventId, form.eventNm, form.eventDateFrom, form.eventDateTo)
-        Ok(views.html.event.eventSearch(eventSearchForm.bindFromRequest, events))
+        if (form.eventDateFrom.isDefined
+          && form.eventDateTo.isDefined
+          && form.eventDateFrom.get.after(form.eventDateTo.get)) {
+          BadRequest(views.html.event.eventSearch(eventSearchForm.bindFromRequest
+            .withError("eventDateFrom", "開催日（From）は開催日（To）より前の日付を入力してください。")
+            .withError("eventDateTo", ""), null))
+        } else {
+          val events = Events.find(form.eventId, form.eventNm, form.eventDateFrom, form.eventDateTo)
+          Ok(views.html.event.eventSearch(eventSearchForm.bindFromRequest, events))
+        }
       })
   }
 
