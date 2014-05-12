@@ -5,6 +5,17 @@
 @main("イベント情報変更") {
   @helper.form(action = controllers.event.routes.EventUpdate.update(id)){
     <div class="container">
+      <ul class="nav nav-tabs">
+        <li>
+          <a href="@controllers.event.routes.EventSearch.index()" data-toggle="tab">検索</a>
+        </li>
+        <li>
+          <a href="@controllers.event.routes.EventCreate.index()" data-toggle="tab">登録</a>
+        </li>
+        <li class="active">
+          <a href="#" data-toggle="tab">更新</a>
+        </li>
+      </ul>
       <fieldset>
        <legend>イベントの情報</legend>
         @helper.inputText(eventForm("eventId"))

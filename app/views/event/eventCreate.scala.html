@@ -5,6 +5,14 @@
 @main("イベント登録") {
   @helper.form(action = controllers.event.routes.EventCreate.create()){
     <div class="container">
+      <ul class="nav nav-tabs">
+        <li>
+          <a href="@controllers.event.routes.EventSearch.index()" data-toggle="tab">検索</a>
+        </li>
+        <li class="active">
+          <a href="#" data-toggle="tab">登録</a>
+        </li>
+      </ul>
       <fieldset>
           <legend>イベントの情報</legend>
           @helper.inputText(eventForm("eventId"))
