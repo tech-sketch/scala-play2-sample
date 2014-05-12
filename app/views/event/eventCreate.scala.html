@@ -1,6 +1,7 @@
-@(eventForm: Form[EventForm])
+@(eventForm: Form[EventForm])(implicit flash: Flash)
 
 @import XenlonHelpers._
+@import xenlon.helper.messages
 
 @main("イベント登録") {
 
@@ -13,16 +14,9 @@
     </li>
   </ul>
 
-  <div class="container">
-    <br>
-    @if(eventForm.errors){
-      <div class="alert alert-danger">
-        入力内容に誤りがあります。確認して下さい。
-      </div>
-    }
-  </div>
+  @messages(eventForm.errors)
 
-  @helper.form(action = controllers.event.routes.EventCreate.create(), 'role -> "form", 'class -> "form-horizontal"){
+  @helper.form(action = controllers.event.routes.EventCreate.create(), 'class -> "form-horizontal"){
     <div class="container">
       <fieldset>
         <legend>イベントの情報</legend>

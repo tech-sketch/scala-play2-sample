@@ -11,7 +11,7 @@ import models.{ EventForm, Event, Events }
 object EventCreate extends Controller {
 
   /** イベントフォーム */
- val eventForm = Form(
+  val eventForm = Form(
     mapping(
       "eventId" -> nonEmptyText.verifying(fixLength(5)),
       "eventNm" -> nonEmptyText.verifying(maxLength(5)),
@@ -33,18 +33,21 @@ object EventCreate extends Controller {
         val event = Event(0, form.eventId, form.eventNm, form.eventDate, form.homepage)
         Events.create(event)
         Redirect(controllers.event.routes.EventCreate.index)
+          .flashing("success" -> "登録しました。")
       })
   }
 
   /** テーブル作成 */
-  def createTable = Action {
+  def createTable = Action { implicit request =>
     Events.createTable
-    Ok(views.html.event.eventCreate(eventForm))
+    Redirect(controllers.event.routes.EventCreate.index)
+      .flashing("success" -> "テーブルを作成しました。")
   }
 
   /** テーブル削除 */
-  def dropTable = Action {
+  def dropTable = Action { implicit request =>
     Events.dropTable
-    Ok(views.html.event.eventCreate(eventForm))
+    Redirect(controllers.event.routes.EventCreate.index)
+      .flashing("success" -> "テーブルを削除しました。")
   }
 }

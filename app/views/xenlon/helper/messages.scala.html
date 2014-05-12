@@ -1,0 +1,17 @@
+@(errors: scala.Seq[play.api.data.FormError])(implicit flash: Flash)
+
+@import XenlonHelpers._
+
+  <div class="container">
+    <br>
+    @if(flash.get("success").isDefined){
+      <div class="alert alert-success">
+        @flash.get("success")
+      </div>
+    }
+    @if(errors){
+      <div class="alert alert-danger">
+        入力内容に誤りがあります。確認して下さい。
+      </div>
+    }
+  </div>

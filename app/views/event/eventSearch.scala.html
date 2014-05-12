@@ -1,6 +1,7 @@
-@(eventForm: Form[EventSearchForm], events: List[Event])
+@(eventForm: Form[EventSearchForm], events: List[Event])(implicit flash: Flash)
 
 @import XenlonHelpers._
+@import xenlon.helper.messages
 
 @main("イベント検索") {
   <ul class="nav nav-tabs">
@@ -12,14 +13,7 @@
     </li>
   </ul>
 
-  <div class="container">
-    <br>
-    @if(eventForm.errors){
-      <div class="alert alert-danger">
-        入力内容に誤りがあります。確認して下さい。
-      </div>
-    }
-  </div>
+  @messages(eventForm.errors)
 
   @helper.form(action = controllers.event.routes.EventSearch.search(), 'role -> "form", 'class -> "form-horizontal"){
     <div class="container">

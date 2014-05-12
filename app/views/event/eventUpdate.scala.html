@@ -1,6 +1,7 @@
-@(eventForm: Form[EventForm], id: Int)
+@(eventForm: Form[EventForm], id: Int)(implicit flash: Flash)
 
 @import XenlonHelpers._
+@import xenlon.helper.messages
 
 @main("イベント情報変更") {
   <ul class="nav nav-tabs">
@@ -15,14 +16,7 @@
     </li>
   </ul>
 
-  <div class="container">
-    <br>
-    @if(eventForm.errors){
-      <div class="alert alert-danger">
-        入力内容に誤りがあります。確認して下さい。
-      </div>
-    }
-  </div>
+  @messages(eventForm.errors)
 
   @helper.form(action = controllers.event.routes.EventUpdate.update(id), 'role -> "form", 'class -> "form-horizontal"){
     <div class="container">
