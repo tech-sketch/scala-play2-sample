@@ -1,0 +1,16 @@
+@(eventForm: Form[EventForm], id: Int)
+
+@import helper.twitterBootstrap._
+
+@main("イベント情報変更") {
+  @helper.form(action = controllers.event.routes.EventUpdate.update(id)){
+    <div class="container">
+      <fieldset>
+       <legend>イベントの情報</legend>
+        @helper.inputText(eventForm("eventId"))
+        @helper.inputText(eventForm("eventNm"))
+        <input type="submit" value="更新" class="btn btn-primary">
+      </fieldset>
+    </div>
+  }
+}

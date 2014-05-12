@@ -36,6 +36,16 @@ object Events {
     return q.invoker.list
   }
 
+  /** ID検索 */
+  def findById(id: Int): Event = database.withTransaction { implicit session: Session =>
+    events.filter(_.id === id).first
+  }
+
+  /** 更新 */
+  def update(e: Event) = database.withTransaction { implicit session: Session =>
+    events.filter(_.id === e.id).update(e)
+  }
+
   /** テーブル作成 */
   def createTable = database.withSession { implicit session: Session =>
     events.ddl.create

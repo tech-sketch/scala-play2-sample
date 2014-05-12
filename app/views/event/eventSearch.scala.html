@@ -19,6 +19,7 @@
             <tr>
               <th>イベントID</th>
               <th>イベント名</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -26,6 +27,11 @@
               <tr>
                 <td>@event.eventId</td>
                 <td>@event.eventNm</td>
+                <td>
+                  <a href="@controllers.event.routes.EventUpdate.index(event.id)">
+                    <i class="glyphicon glyphicon-edit"></i>
+                  </a>
+                </td>
               </tr>
             }
           </tbody>
