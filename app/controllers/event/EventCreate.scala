@@ -5,8 +5,9 @@ import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
 import xenlon.api.data.validation.XenlonConstraints._
+import models.{ EventForm, Events }
 import xenlon.api.data.XenlonForms._
-import models.{ EventForm, Event, Events }
+import models.Tables._
 
 object EventCreate extends Controller {
 
@@ -30,7 +31,7 @@ object EventCreate extends Controller {
         Ok(views.html.event.eventCreate(form))
       },
       success = { form =>
-        val event = Event(0, form.eventId, form.eventNm, form.eventDate, form.homepage)
+        val event = EventRow(0, form.eventId, form.eventNm, form.eventDate, form.homepage)
         Events.create(event)
         Redirect(controllers.event.routes.EventCreate.index)
           .flashing("success" -> "登録しました。")

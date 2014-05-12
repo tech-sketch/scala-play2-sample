@@ -5,7 +5,8 @@ import play.api.mvc._
 import play.api.data.Form
 import play.api.data.Forms._
 import xenlon.api.data.validation.XenlonConstraints._
-import models.{ EventForm, Event, Events }
+import models.{ EventForm, Events }
+import models.Tables._
 
 object EventUpdate extends Controller {
 
@@ -31,7 +32,7 @@ object EventUpdate extends Controller {
         Ok(views.html.event.eventUpdate(form, id))
       },
       success = { form =>
-        val event = Event(id, form.eventId, form.eventNm, form.eventDate, form.homepage)
+        val event = EventRow(id, form.eventId, form.eventNm, form.eventDate, form.homepage)
         Events.update(event)
         Redirect(controllers.event.routes.EventUpdate.index(id))
           .flashing("success" -> "変更しました。")
