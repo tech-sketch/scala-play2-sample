@@ -15,7 +15,7 @@ object EventCreate extends Controller {
       "eventId" -> nonEmptyText.verifying(fixLength(5)),
       "eventNm" -> nonEmptyText.verifying(maxLength(5)),
       "eventDate" -> optional(sqlDate),
-      "homepage" -> optional(text))(EventForm.apply)(EventForm.unapply))
+      "homepage" -> optional(text.verifying(isUrl)))(EventForm.apply)(EventForm.unapply))
 
   /** 初期表示 */
   def index = Action { implicit request =>
